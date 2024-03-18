@@ -17,6 +17,22 @@ function FileUpload() {
       alert("Please select a file to upload");
     }
   };
+  return (
+ <div className="container mt-5">
+      <h2>Bootstrap File Upload</h2>
+      <div className="input-group mb-3">
+        <div className="custom-file">
+          <input type="file" className="custom-file-input" id="inputGroupFile" onChange={handleFileChange} />
+          <label className="custom-file-label" htmlFor="inputGroupFile">
+            {selectedFile ? selectedFile.name : 'Choose file'}
+          </label>
+        </div>
+        <div className="input-group-append">
+          <button className="btn btn-primary" type="button" onClick={handleUpload}>Upload</button>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div class="Continer">
@@ -25,6 +41,7 @@ function FileUpload() {
       <button onClick={handleUpload}>Upload</button>
     </div>
   );
+  
 }
 
 export default FileUpload;
