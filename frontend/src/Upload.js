@@ -9,14 +9,34 @@ function FileUpload() {
   };
 
   // Function to handle file upload
-  const handleUpload = () => {
+  const handleUpload = async (event) => {
     if (selectedFile) {
       // You can send the selected file to your backend or process it here
       console.log("Selected file:", selectedFile);
+      try {
+            const response = await fetch('http://localhost:8000/myapp/upload_file/', {
+                method: 'POST',
+                body: selectedFile,
+            });
+
+            if (response.ok) {
+                console.log('File uploaded successfully');
+            } else {
+                console.error('Failed to upload file');
+            }
+        } catch (error) {
+            console.error('Error uploading file:', error);
+        }
     } else {
       alert("Please select a file to upload");
     }
   };
+
+
+
+
+
+
   return (
  <div className="container mt-5">
       <h2>Bootstrap File Upload</h2>
@@ -34,13 +54,13 @@ function FileUpload() {
     </div>
   );
 
-  return (
-    <div class="Continer">
-      <h2>File Upload</h2>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
-    </div>
-  );
+  // return (
+  //   <div class="Continer">
+  //     <h2>File Upload</h2>
+  //     <input type="file" onChange={handleFileChange} />
+  //     <button onClick={handleUpload}>Upload</button>
+  //   </div>
+  // );
   
 }
 
