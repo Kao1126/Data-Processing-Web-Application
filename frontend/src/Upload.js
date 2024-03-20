@@ -55,7 +55,7 @@ function FileUpload() {
 
   return (
     <div class="content">
-      <form>
+      <form class="form-container">
         <div class="mb-3">
           <label for="formFile" class="form-label">
             Please Upload the CSV File
@@ -68,7 +68,7 @@ function FileUpload() {
           />
         </div>
         <button
-          className="btn btn-primary"
+          className="btn btn-primary btn-submit"
           type="button"
           onClick={handleUpload}
         >
