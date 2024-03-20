@@ -24,21 +24,3 @@ def uploadCSV(request):
     else:
         form = CSVUploadForm()
     return JsonResponse({'error': 'No file found in the request'}, status=400)
-
-
-def sayHello(request):
-    return HttpResponse('Hello World')
-
-@csrf_exempt
-def upload_file(request):
-    
-    if request.method == 'POST':
-        form = CSVUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-        
-        # uploaded_file = request.FILES['file']
-        # Handle the uploaded file, save it, process it, etc.
-        return JsonResponse({'message': 'File uploaded successfully'})
-    else:
-        return JsonResponse({'error': 'No file found in the request'}, status=400)
