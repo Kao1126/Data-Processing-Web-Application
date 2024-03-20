@@ -1,50 +1,70 @@
 # %%
-
 import pandas as pd
 
+def count_type(x):
+    
+    infer_type = 'string'
+    
+    try:
+        x = int(x)
+        infer_type = 'int'
+    except ValueError:
+        pass
+    
+    try:
+        # condition for datetime format
+        if len(x) >= 7 and x.count("/") == 2:
+            x = pd.to_datetime(x)
+            infer_type = 'date-time'
+        
+    except (ValueError, TypeError):
+        pass
+    
+    return infer_type
+    
+
+
 def infer_and_convert_data_types(df):
+    df = pd.read_csv('sample_data.csv')
     for col in df.columns:
-        # Attempt to convert to numeric first
-        df_converted = pd.to_numeric(df[col], errors='coerce')
-
-        # Something will wrong here
-        if not df_converted.isna().all():  # If at least one value is numeric
-            df[col] = df_converted
-            continue
-
-        # Attempt to convert to datetime
-        try:
+        
+        
+        types = df[col].apply(count_type)
+        types.name = "types"
+        majority_type = types.value_counts(ascending=False).idxmax(axis=1)
+        
+        # remove the incorrect datetime format
+        df = pd.concat([df, types], axis = 1)
+        df = df.drop(df[(df['types'] != majority_type)].index)
+        df = df.drop('types', axis=1)
+        
+        if majority_type == 'int':
+       
+            df[col] = df[col].astype('int8')
+            
+            
+        elif majority_type == 'date-time':
+            # remove incorrect datetime format
+        
             df[col] = pd.to_datetime(df[col])
-            continue
-        except (ValueError, TypeError):
-            pass
+        
+        # if majority_type == string
+        else:
 
-
-        # Check if the column should be categorical
-        if len(df[col].unique()) / len(df[col]) < 0.5:  # Example threshold for categorization
-            df[col] = pd.Categorical(df[col])
-
+            if len(df[col].unique()) / len(df[col]) < 0.5:  # Example threshold for categorization
+                df[col] = pd.Categorical(df[col])
+            
     return df
 
 
-# Test the function with your DataFrame
-df = pd.read_csv('sample_data.csv')
-print("Data types before inference:")
-print(df.dtypes)
-
-df = infer_and_convert_data_types(df)
-
-# clean Null
-# df.drop(columns=df.columns, inplace=True)
 
 
+csv_file = 'sample_data.csv'
+df = infer_and_convert_data_types(csv_file)
+
+# print(df["Name"].apply(type).value_counts())
+
+# print('---')
 print("\nData types after inference:")
 print(df.dtypes)
 
-print(df.style)
-
-
-
-
-
-# %%
