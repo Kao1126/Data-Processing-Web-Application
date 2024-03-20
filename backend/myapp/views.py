@@ -9,21 +9,21 @@ from .infer import InferCSV
 import pandas as pd
 import json
 
+
+@csrf_exempt
 def uploadCSV(request):
 
-    if request.method == 'POST' and request.FILES['file']:
+    if request.method == 'POST' and request.FILES['csv_file']:
 
-        uploaded_file = request.FILES['file']
+        uploaded_file = request.FILES['csv_file']
    
         infer = InferCSV(csv_file=uploaded_file)
         types = infer.get_infer_types()
-
         return HttpResponse(json.dumps(types) )
-
-        return render(request, 'success.html')
+    
     else:
         form = CSVUploadForm()
-    return render(request, 'upload.html', {'form': form})
+    return JsonResponse({'error': 'No file found in the request'}, status=400)
 
 
 def sayHello(request):
