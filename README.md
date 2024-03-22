@@ -14,15 +14,13 @@ The technical assessment from Rhombus.
 
 ####
 
-    $ cd frontend
-    $ npm start
+    cd frontend
+    npm start
 
 2. Install dependencies and run backend server
 
 ####
 
-    $ cd ..
-    $ cd backend
-    $ pip install Django
-    $ pip install django-cors-headers
-    $ python manage.py runserver
+    cd backend
+    pip install -r requirements.txt
+    python manage.py runserver
