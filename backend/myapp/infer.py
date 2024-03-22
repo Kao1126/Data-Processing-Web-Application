@@ -4,6 +4,11 @@ class InferCSV():
     def __init__(self, csv_file):
         self.df = pd.read_csv(csv_file)
         self.infer_df = self.infer_and_convert_data_types()
+        self.user_type = {
+            'object': 'Text',
+            'datetime64[ns]': 'Date',
+            'int8': 'Integer (8 bit)'
+        }
         
 
     def count_type(self, x):
@@ -52,11 +57,16 @@ class InferCSV():
 
             # if majority_type == string
             else:
-                if len(df[col].unique()) / len(df[col]) < 0.5:  # Example threshold for categorization
+                if len(df[col].unique()) / len(df[col]) < 0.5: 
                     df[col] = pd.Categorical(df[col])
 
         return df
 
     def get_infer_types(self):
-        return self.infer_df.dtypes.apply(lambda x: x.name).to_dict()
+        dtypes = self.infer_df.dtypes.apply(lambda x: x.name).to_dict()
+        for col_name, type_name in dtypes.items():
+            if type_name in self.user_type:
+                dtypes[col_name] = self.user_type[type_name]
+
+        return dtypes
 
