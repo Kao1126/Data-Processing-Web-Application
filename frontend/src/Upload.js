@@ -12,6 +12,10 @@ function FileUpload() {
     setSelectedFile(event.target.files[0]);
   };
 
+  function getExtension(filename) {
+    return filename.split(".").pop();
+  }
+
   function getCookie(name) {
     const cookieValue = document.cookie.match(
       "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
@@ -22,32 +26,38 @@ function FileUpload() {
 
   const handleUpload = () => {
     if (selectedFile) {
-      const formData = new FormData();
-      formData.append("csv_file", selectedFile);
+      const file_type = getExtension(selectedFile["name"]);
+      console.log(file_type);
+      if (file_type !== "csv" && file_type !== "xlsx") {
+        alert("Please select a CSV or Excel file to upload");
+      } else {
+        const formData = new FormData();
+        formData.append("csv_file", selectedFile);
 
-      fetch("http://127.0.0.1:8000/myapp/uploadCSV/", {
-        method: "POST",
-        headers: {
-          "X-CSRFTOKEN": csrftoken,
-        },
-        body: formData,
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to upload CSV file");
-          }
-          return response.json();
+        fetch("http://127.0.0.1:8000/myapp/uploadCSV/", {
+          method: "POST",
+          headers: {
+            "X-CSRFTOKEN": csrftoken,
+          },
+          body: formData,
         })
-        .then((data) => {
-          console.log("Upload successful:", data);
-          // Handle successful upload if needed
-          console.log(data);
-          setJsonData(data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          // Handle error
-        });
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to upload CSV file");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            console.log("Upload successful:", data);
+            // Handle successful upload if needed
+            console.log(data);
+            setJsonData(data);
+          })
+          .catch((error) => {
+            console.error("Error:", error);
+            // Handle error
+          });
+      }
     } else {
       alert("Please select a file to upload");
     }
@@ -58,7 +68,7 @@ function FileUpload() {
       <form class="form-container">
         <div class="mb-3">
           <label for="formFile" class="form-label">
-            Please Upload the CSV File
+            Please Upload the CSV or Excel File
           </label>
           <input
             class="form-control"

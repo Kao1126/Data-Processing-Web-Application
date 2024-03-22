@@ -1,6 +1,6 @@
 # Rhombus
 
-The technical assessment from Rhombus.
+Web application that processes and displays data, focusing on data type inference and conversion for datasets using Python and Pandas.
 
 # Usage
 
@@ -8,7 +8,7 @@ The technical assessment from Rhombus.
 
 ####
 
-    $ git clone https://github.com/Kao1126/Rhombus.git
+    git clone https://github.com/Kao1126/Rhombus.git
 
 1. Run frontend server
 

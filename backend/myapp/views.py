@@ -16,8 +16,9 @@ def uploadCSV(request):
     if request.method == 'POST' and request.FILES['csv_file']:
 
         uploaded_file = request.FILES['csv_file']
+        file_type = request.FILES['csv_file'].name.split('.').pop()
    
-        infer = InferCSV(csv_file=uploaded_file)
+        infer = InferCSV(csv_file=uploaded_file, file_type=file_type)
         types = infer.get_infer_types()
         return HttpResponse(json.dumps(types) )
     
