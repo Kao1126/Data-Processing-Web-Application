@@ -7,13 +7,15 @@ class InferCSV():
             self.df = pd.read_csv(csv_file)
         elif file_type == 'xlsx':
             self.df = pd.read_excel(csv_file)
-
+        else:
+            raise TypeError("Only csv and Excel file types are allowed")
 
         self.infer_df = self.infer_and_convert_data_types()
         self.user_type = {
             'object': 'Text',
             'datetime64[ns]': 'Date',
-            'int8': 'Integer (8 bit)'
+            'int8': 'Integer (8 bit)',
+            'category': 'Text'
         }
         
 
