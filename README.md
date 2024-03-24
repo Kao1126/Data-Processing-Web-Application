@@ -12,7 +12,7 @@ Web application that processes and displays data, focusing on data type inferenc
 
 ####
 
-    https://github.com/Kao1126/Data-Processing-Web-Application.git
+    git clone https://github.com/Kao1126/Data-Processing-Web-Application.git
 
 1. Run frontend server
 
