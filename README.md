@@ -2,7 +2,7 @@
 
 Web application that processes and displays data, focusing on data type inference and conversion for datasets using Python and Pandas.
 
-[Demo Video](https://youtu.be/InufhGqYQFA?si=-09KDZokp-ieE0lk)
+[![Demo](demo.gif)](https://youtu.be/InufhGqYQFA?si=-09KDZokp-ieE0lk)
 
 # Usage
 
