@@ -3,6 +3,7 @@
 Web application that processes and displays data, focusing on data type inference and conversion for datasets using React, Django, and Pandas.
 
 [![Demo](demo.gif)](https://youtu.be/InufhGqYQFA?si=-09KDZokp-ieE0lk)
+
 [Demo video](https://youtu.be/InufhGqYQFA?si=-09KDZokp-ieE0lk)
 
 # Usage
@@ -18,12 +19,15 @@ Web application that processes and displays data, focusing on data type inferenc
 ####
 
     cd frontend
+    npm install
     npm start
 
 2. Install dependencies and run backend server
 
+Open the other terminal.
+
 ####
 
     cd backend
-    pip install -r requirements.txt
-    python manage.py runserver
+    pip3 install -r requirements.txt
+    python3 manage.py runserver
