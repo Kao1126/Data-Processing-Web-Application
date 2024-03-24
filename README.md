@@ -14,7 +14,9 @@ Web application that processes and displays data, focusing on data type inferenc
 
     git clone https://github.com/Kao1126/Data-Processing-Web-Application.git
 
-1. Run frontend server
+2. Run frontend server
+
+Start the termimal
 
 ####
 
@@ -22,9 +24,9 @@ Web application that processes and displays data, focusing on data type inferenc
     npm install
     npm start
 
-2. Install dependencies and run backend server
+3. Install dependencies and run backend server
 
-Open the other terminal.
+Start the other terminal
 
 ####
 
