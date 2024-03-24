@@ -1,8 +1,9 @@
 # Data Processing Web Application
 
-Web application that processes and displays data, focusing on data type inference and conversion for datasets using Python and Pandas.
+Web application that processes and displays data, focusing on data type inference and conversion for datasets using React, Django, and Pandas.
 
 [![Demo](demo.gif)](https://youtu.be/InufhGqYQFA?si=-09KDZokp-ieE0lk)
+[Demo video](https://youtu.be/InufhGqYQFA?si=-09KDZokp-ieE0lk)
 
 # Usage
 
