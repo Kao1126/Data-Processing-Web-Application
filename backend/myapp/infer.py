@@ -3,14 +3,22 @@ import pandas as pd
 class InferCSV():
     def __init__(self, csv_file, file_type):
       
-        if file_type == 'csv':
-            self.df = pd.read_csv(csv_file)
-        elif file_type == 'xlsx':
-            self.df = pd.read_excel(csv_file)
-        else:
-            raise TypeError("Only csv and Excel file types are allowed")
+        self.empty_types = {}
+        try:
+            if file_type == 'csv':
+                self.df = pd.read_csv(csv_file)
+            elif file_type == 'xlsx':
+                self.df = pd.read_excel(csv_file)
+            else:
+                raise TypeError("Only csv and Excel file types are allowed")
 
-        self.infer_df = self.infer_and_convert_data_types()
+            self.infer_df = self.infer_and_convert_data_types()
+        
+        # handle empty case
+        except pd.errors.EmptyDataError:
+            self.empty_types = {'-': '-'}
+
+        # user friendly name
         self.user_type = {
             'object': 'Text',
             'datetime64[ns]': 'Date',
@@ -50,7 +58,7 @@ class InferCSV():
             types.name = "types"
             majority_type = types.value_counts(ascending=False).idxmax(axis=1)
 
-            # remove the incorrect datetime format
+            # remove the incorrect format (data cleaning)
             df = pd.concat([df, types], axis = 1)
             df = df.drop(df[(df['types'] != majority_type)].index)
             df = df.drop('types', axis=1)
@@ -59,8 +67,6 @@ class InferCSV():
                 df[col] = df[col].astype('int8')
 
             elif majority_type == 'date-time':
-                
-                # remove incorrect datetime format
                 df[col] = pd.to_datetime(df[col])
 
             # if majority_type == string
@@ -71,6 +77,10 @@ class InferCSV():
         return df
 
     def get_infer_types(self):
+
+        if self.empty_types:
+            return self.empty_types
+
         dtypes = self.infer_df.dtypes.apply(lambda x: x.name).to_dict()
         for col_name, type_name in dtypes.items():
             if type_name in self.user_type:
